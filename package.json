@@ -1,0 +1,38 @@
+{
+    "name": "algorunner",
+    "version": "1.0.0",
+    "description": "Bot runner for the BlinkTrade network",
+    "keywords": [
+        "blinktrade",
+        "bitcoin",
+        "exchange"
+    ],
+    "homepage": "https://blinktrade.com/",
+    "license" : "MIT",
+    "contributors": [
+        "Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>"
+    ],
+    "files": [
+        "README.adoc"
+    ],
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/main.js"
+    },
+    "config": {},
+    "dependencies": {
+        "faye-websocket": "^0.11.1",
+        "blessed": "^0.1.81",
+        "blessed-contrib": "^4.8.5"
+    },
+    "engines": {
+        "node": "^9.11.1",
+        "npm": "^5.8.0"
+    },
+    "os": [
+        "!win32"
+    ],
+    "cpu": [
+        "x64"
+    ]
+}

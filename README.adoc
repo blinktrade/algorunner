@@ -1,0 +1,4 @@
+= Algorunner
+
+Write bots to the BlinkTrade network using a reactive easy-to-use API in
+Javascript.
