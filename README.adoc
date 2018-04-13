@@ -2,3 +2,12 @@
 
 Write bots to the BlinkTrade network using a reactive easy-to-use API in
 Javascript.
+
+== Building
+
+This program uses `npm`. Use the following command to install dependencies:
+
+[source,shell]
+----
+npm install
+----

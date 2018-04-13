@@ -8,7 +8,7 @@
         "exchange"
     ],
     "homepage": "https://blinktrade.com/",
-    "license" : "MIT",
+    "license": "MIT",
     "contributors": [
         "Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>"
     ],
@@ -23,7 +23,8 @@
     "dependencies": {
         "faye-websocket": "^0.11.1",
         "blessed": "^0.1.81",
-        "blessed-contrib": "^4.8.5"
+        "blessed-contrib": "^4.8.5",
+        "google-closure-library": "20180405.0.0"
     },
     "engines": {
         "node": "^9.11.1",
