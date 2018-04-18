@@ -109,10 +109,6 @@ module.exports = function(perms, cb) {
         }
     });
 
-    screen.key('tab', function(ch, key) {
-        form.focusNext();
-    });
-
     cancel.focus();
     screen.render();
 };
