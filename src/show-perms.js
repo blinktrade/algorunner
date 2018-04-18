@@ -15,6 +15,7 @@ module.exports = function(perms, cb) {
                 bg: 'inverse'
             }
         },
+        tags: true,
         content: 'This app is asking for the following permissions. Do you want'
             + ' to run it?\n'
             + '\n'
@@ -30,9 +31,17 @@ module.exports = function(perms, cb) {
                 } else if (e == 'cancel_order') {
                     return 'Cancel orders';
                 } else {
-                    return e;
+                    return '{yellow-bg}' + blessed.escape(e) + '{/}';
                 }
             }).map(e => '• ' + e).join('\n')
+            + '\n\n'
+            + '{bold}WARNING{/bold}: Do notice that these permissions are not'
+            + ' enforced by AlgoRUNNER and the algorithm may actually perform'
+            + " more actions than asked for. You're using AlgoRUNNER at your"
+            + " own risk and we're not responsible in anyway by the use you"
+            + ' make of it.\n'
+            + '\n'
+            + "Press '{inverse}q{/inverse}' to abort operation."
     });
 
     let submit = grid.set(1, 0, 1, 1, blessed.button, {
@@ -48,7 +57,8 @@ module.exports = function(perms, cb) {
             fg: 'white',
             bg: 'blue',
             focus: {
-                bg: 'red'
+                bg: 'red',
+                blink: true
             },
             hover: {
                 bg: 'red'
@@ -69,7 +79,8 @@ module.exports = function(perms, cb) {
             fg: 'white',
             bg: 'blue',
             focus: {
-                bg: 'red'
+                bg: 'red',
+                blink: true
             },
             hover: {
                 bg: 'red'
