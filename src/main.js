@@ -4,6 +4,7 @@ const blessed = require('blessed');
 const contrib = require('blessed-contrib');
 const algoDecoder = require('./algo-decoder.js');
 const showPerms = require('./show-perms.js');
+const runner = require('./runner');
 
 if (process.argv.length != 4) {
     console.log('wrong number of arguments');
@@ -33,6 +34,46 @@ showPerms(algo[0].permissions, function(res) {
         return;
     }
 
+    const application = {
+        sendBuyLimitedOrder: (qty, price, opt_clientOrderId) => {},
+        sendSellLimitedOrder: (qty, price, opt_clientOrderId) => {},
+        cancelOrder: (opt_clientOrderId, opt_orderId) => {},
+        cancelAllOrders: () => {},
+        getOrderBook: () => { return {}; },
+        getBalance: (currency, type) => {},
+        getTrades: () => {},
+        getParameters: () => { return {}; },
+        getOpenOrders: () => {},
+        getMarket: () => {},
+        getInstanceID: () => { return "node:0" },
+        stop: (opt_error_message) => {}
+    };
+
+    const algoManager = {
+        _started: false,
+        _paused: false,
+        _params: {},
+        toggle: function() {
+            if (!this._started) {
+                this._algo = runner.getAlgoObj(
+                    algo[1], algo[0].creator, application, process.argv[3]
+                );
+                this._algo.start(this._params);
+                this._started = true;
+                return;
+            }
+
+            this._paused = !this._paused;
+        },
+        uiLabel: function() {
+            if (this._paused) {
+                return 'Resume';
+            } else {
+                return 'Pause';
+            }
+        }
+    };
+
     const screen = blessed.screen({ smartCSR: true });
     screen.title = 'BlinkTrade::AlgoRUNNER';
     let grid = new contrib.grid({
@@ -49,7 +90,13 @@ showPerms(algo[0].permissions, function(res) {
         fg: "green",
         label: 'Algo log'
     });
-    //algoLog.log('TODO: use!');
+
+    application.showNotification = (
+        title, description, notification_type = "info"
+    ) => {
+        algoLog.log('[' + notification_type + '] ' + title + ': '
+                    + description);
+    };
 
     const formStyle = {
         fg: 'white',
@@ -61,18 +108,27 @@ showPerms(algo[0].permissions, function(res) {
             bg: 'red'
         }
     };
+    const btnStyle = Object.assign({}, formStyle);
+    btnStyle.focus = Object.assign({}, btnStyle.focus);
+    btnStyle.focus.blink = true;
 
     const updateBtn
           = grid.set(algo[0].params.length + 1, 0, 1, 1, blessed.button, {
               content: 'Update',
-              style: Object.assign({}, formStyle)
+              style: Object.assign({}, btnStyle)
           });
 
     const pauseBtn
           = grid.set(algo[0].params.length + 1, 1, 1, 1, blessed.button, {
-              content: 'Start/stop',
-              style: Object.assign({}, formStyle)
+              content: 'Start',
+              style: Object.assign({}, btnStyle)
           });
+
+    pauseBtn.on('press', () => {
+        algoManager.toggle();
+        pauseBtn.setText(algoManager.uiLabel());
+        screen.render();
+    });
 
     let paramsInput = [];
     let paramsInputIdx = 0;
@@ -82,11 +138,16 @@ showPerms(algo[0].permissions, function(res) {
             content: algo[0].params[i].label,
             _data: algo[0].params[i]
         });
-        let e = grid.set(i + 1, 1, 1, 1, blessed.textbox, {
+        let input = grid.set(i + 1, 1, 1, 1, blessed.textbox, {
             inputOnFocus: true,
             style: Object.assign({}, formStyle)
         });
-        paramsInput.push(e);
+        input.on('action', () => {
+            algoManager._params[algo[0].params[i].name] = input.value;
+        });
+        algoManager._params[algo[0].params[i].name] = algo[0].params[i].value;
+        input.setValue(algo[0].params[i].value);
+        paramsInput.push(input);
     }
     paramsInput.push(updateBtn);
     paramsInput.push(pauseBtn);
@@ -113,12 +174,11 @@ showPerms(algo[0].permissions, function(res) {
     });
 
     screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+        if (algoManager._algo != null) {
+            algoManager._algo.stop();
+        }
         screen.destroy();
     });
 
     screen.render();
-    //eval(algo[1]);
-    //let obj = eval(algo[0].creator + '()');
-    //console.log(typeof(obj));
-    //console.log(obj);
 });

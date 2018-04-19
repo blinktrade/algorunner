@@ -15,3 +15,4 @@ npm install
 == TODO
 
 * https://github.com/yaronn/blessed-contrib#table[Table of open orders].
+* `params.validator` fields are ignored for now.
