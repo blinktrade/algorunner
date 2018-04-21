@@ -103,9 +103,6 @@ showPerms(algo[0].permissions, function(res) {
         bg: 'blue',
         focus: {
             bg: 'red'
-        },
-        hover: {
-            bg: 'red'
         }
     };
     const btnStyle = Object.assign({}, formStyle);

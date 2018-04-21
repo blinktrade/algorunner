@@ -59,9 +59,6 @@ module.exports = function(perms, cb) {
             focus: {
                 bg: 'red',
                 blink: true
-            },
-            hover: {
-                bg: 'red'
             }
         }
     });
@@ -81,9 +78,6 @@ module.exports = function(perms, cb) {
             focus: {
                 bg: 'red',
                 blink: true
-            },
-            hover: {
-                bg: 'red'
             }
         }
     });
