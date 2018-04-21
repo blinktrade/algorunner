@@ -88,7 +88,7 @@ showPerms(algo[0].permissions, function(res) {
 
     const algoLog = grid.set(0, 1, 1, 1, contrib.log, {
         fg: "green",
-        label: 'Algo log'
+        label: 'Notifications'
     });
 
     application.showNotification = (
