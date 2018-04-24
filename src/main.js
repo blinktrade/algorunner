@@ -3,6 +3,7 @@ const fs = require('fs');
 const blessed = require('blessed');
 const contrib = require('blessed-contrib');
 const algoDecoder = require('./algo-decoder.js');
+const getCredentials = require('./get-credentials.js');
 const showPerms = require('./show-perms.js');
 const runner = require('./runner');
 const util = require('util');
@@ -30,8 +31,12 @@ for (const e of algo[0].permissions) {
 }
 
 (async function() {
+    let apikey, pass;
     try {
         await util.promisify(showPerms)(algo[0].permissions);
+        const cred = await util.promisify(getCredentials)();
+        apikey = cred.apikey;
+        pass = cred.pass;
     } catch (e) {
         console.log('Aborting operation');
         return;
