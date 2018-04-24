@@ -187,3 +187,5 @@ for (const e of algo[0].permissions) {
 
     screen.render();
 })()
+
+process.on('unhandledRejection', (e, p) => console.error(e.stack || e));
