@@ -5,6 +5,7 @@ const contrib = require('blessed-contrib');
 const algoDecoder = require('./algo-decoder.js');
 const showPerms = require('./show-perms.js');
 const runner = require('./runner');
+const util = require('util');
 
 if (process.argv.length != 4) {
     console.log('wrong number of arguments');
@@ -28,8 +29,10 @@ for (const e of algo[0].permissions) {
     }
 }
 
-showPerms(algo[0].permissions, function(res) {
-    if (!res) {
+(async function() {
+    try {
+        await util.promisify(showPerms)(algo[0].permissions);
+    } catch (e) {
         console.log('Aborting operation');
         return;
     }
@@ -178,4 +181,4 @@ showPerms(algo[0].permissions, function(res) {
     });
 
     screen.render();
-});
+})()

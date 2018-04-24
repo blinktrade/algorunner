@@ -84,17 +84,17 @@ module.exports = function(perms, cb) {
 
     submit.on('press', function() {
         screen.destroy();
-        cb(true);
+        cb(null, null);
     });
 
     cancel.on('press', function() {
         screen.destroy();
-        cb(false);
+        cb("operation aborted", null);
     });
 
     screen.key(['escape', 'q', 'C-c'], function(ch, key) {
         screen.destroy();
-        cb(false);
+        cb("operation aborted", null);
     });
 
     screen.key(['down', 'up'], function(ch, key) {
