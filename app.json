@@ -1,0 +1,10 @@
+{
+  "name": "algorunner",
+  "description": "Bot runner for the BlinkTrade network",
+  "repository": "https://github.com/blinktrade/algorunner",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["blinktrade", "bitcoin", "exchange"],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

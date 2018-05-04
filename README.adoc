@@ -12,6 +12,12 @@ This program uses `npm`. Use the following command to install dependencies:
 npm install
 ----
 
+== Deploy
+image:https://www.herokucdn.com/deploy/button.svg[link="https://heroku.com/deploy"]
+
+image:https://files.cloud.docker.com/images/deploy-to-dockercloud.svg[link="https://cloud.docker.com/stack/deploy]
+
+
 == TODO
 
 * https://github.com/yaronn/blessed-contrib#table[Table of open orders].
